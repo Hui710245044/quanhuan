@@ -1,16 +1,134 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>阴影</title>
-		<style>
-			p{
-				font-size: 26px;
-				text-shadow: 10px 10px 5px red;
+
+<head>
+	<meta charset="UTF-8">
+	<title>拳皇</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			height: 100%
+		}
+
+		body {
+			height: 100%;
+			background: url("images/bg.jpg") center 0;
+			background-size: 100% 100%;
+		}
+
+		#site {
+			position: relative;
+			height: 100%;
+
+		}
+
+		img {
+			position: absolute;
+			bottom: 40px;
+			width: 200px;
+			height: 350px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!--  <embed height="50" width="50" src="video/bg.mp3"></embed> -->
+	<audio src="bg.mp3" controls loop  >
+
+	</audio>
+		<img src="images/site.gif" id="MC" alt="" />
+		</div>
+		<script type="text/javascript">
+			function Game(obj) {
+				//console.log("123");
+				this.obj = obj;
+				this.left = 0;
+				this.time = null;
+
+				//console.log(arg);
 			}
-		</style>
-	</head>
-	<body>
-		<p>你好打算</p>
-	</body>
+			Game.prototype.skill = {
+				"74": function () {
+					this.obj.src = "images/qinquan.gif";
+				},
+				"75": function () {
+					this.obj.src = "images/qinjiao.gif";
+				},
+				"76": function () {
+					this.obj.src = "images/zhongquan.gif";
+				},
+				"73": function () {
+					this.obj.src = "images/zhongjiao.gif";
+				},
+				"79": function () {
+					this.obj.src = "images/dazhao1.gif";
+				},
+				"80": function () {
+					this.obj.src = "images/da.gif";
+				},
+				"85": function () {
+					this.obj.src = "images/wuse.gif";
+				},
+				"70": function () {
+					this.obj.src = "images/pao.gif";
+				},
+				"81": function () {
+					this.obj.src = "images/tui.gif";
+				},
+				"83": function () {
+					this.obj.src = "images/squat.gif";
+				},
+				"65": function () {
+					this.obj.src = "images/retreat.gif";
+					this.time = setInterval(function () {
+						this.left -= 5;
+						this.obj.style.left = this.left + "px";
+					}.bind(this), 13);
+				},
+				"68": function () {
+					this.obj.src = "images/advance.gif";
+					this.time = setInterval(function () {
+						this.left += 5;
+						this.obj.style.left = this.left + "px";
+					}.bind(this), 13);
+				},
+				"87": function () {
+					this.obj.src = "images/jump.gif";
+				}
+			}
+			Game.prototype.stop = function () {
+				clearInterval(this.time);
+				this.obj.src = "images/site.gif";
+			}
+			Game.prototype.active = function (keyCode) {
+				if (this.skill[keyCode]) {
+					this.skill[keyCode].call(this);
+
+				}
+			}
+
+			var imgMC = document.getElementById("MC");
+			var person = new Game(imgMC);
+			document.onkeydown = key;
+
+			function key(ev) {
+				//console.log(event.keyCode)
+				var num = ev.keyCode;
+				person.active(num);
+				this.onkeyup = function () {
+					person.stop();
+					this.onkeydown = key;
+				}
+				this.onkeydown = null;
+
+			}
+		</script>
+
+</body>
+
 </html>
